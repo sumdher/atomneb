@@ -1,4 +1,5 @@
 import os
+import dotenv
 import instructor
 from instructor import Image
 import openai
@@ -11,6 +12,8 @@ console = Console()
 
 # Memory setup
 memory = AgentMemory()
+
+dotenv.load_dotenv()
 
 # Initialize memory with an initial message from the assistant
 initial_message = BaseAgentOutputSchema(chat_message="Hello! How can I assist you today?")
