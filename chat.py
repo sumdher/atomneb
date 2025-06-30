@@ -31,7 +31,7 @@ client = instructor.from_openai(
 agent = BaseAgent(
     config=BaseAgentConfig(
         client=client,
-        model="Qwen/Qwen3-30B-A3B", 
+        model="Qwen/Qwen3-30B-A3B",
         memory=memory,
     )
 )
@@ -44,7 +44,7 @@ while True:
     if user_input.lower() in ["/exit", "/quit"]:
         console.print("Exiting chat...")
         break
-    
+
     memory.add_message("user", BaseAgentInputSchema(chat_message=user_input))
     # Process the user's input through the agent and get the response
     input_schema = BaseAgentInputSchema(chat_message=user_input)
