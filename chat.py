@@ -20,13 +20,18 @@ initial_message = BaseAgentOutputSchema(chat_message="Hello! How can I assist yo
 memory.add_message("assistant", initial_message)
 
 # OpenAI client setup using the Instructor library
-client = instructor.from_openai(openai.OpenAI(api_key=os.getenv("NEBIUS_API_KEY")))
+client = instructor.from_openai(
+    openai.OpenAI(
+        base_url="https://api.studio.nebius.com/v1",
+        api_key=os.getenv("NEBIUS_API_KEY")
+        )
+    )
 
 # Agent setup with specified configuration
 agent = BaseAgent(
     config=BaseAgentConfig(
         client=client,
-        model="gpt-4o-mini",  # Using gpt-4o-mini model
+        model="Qwen/Qwen3-30B-A3B", 
         memory=memory,
     )
 )
@@ -39,10 +44,11 @@ while True:
     if user_input.lower() in ["/exit", "/quit"]:
         console.print("Exiting chat...")
         break
-
+    
+    memory.add_message("user", BaseAgentInputSchema(chat_message=user_input))
     # Process the user's input through the agent and get the response
     input_schema = BaseAgentInputSchema(chat_message=user_input)
     response = agent.run(input_schema)
-
+    memory.add_message("assistant", response)
     # Display the agent's response
     console.print("Agent: ", response.chat_message)
