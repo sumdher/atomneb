@@ -1,5 +1,6 @@
 import os
 import instructor
+from instructor import Image
 import openai
 from rich.console import Console
 from atomic_agents.lib.components.agent_memory import AgentMemory
@@ -16,7 +17,7 @@ initial_message = BaseAgentOutputSchema(chat_message="Hello! How can I assist yo
 memory.add_message("assistant", initial_message)
 
 # OpenAI client setup using the Instructor library
-client = instructor.from_openai(openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
+client = instructor.from_openai(openai.OpenAI(api_key=os.getenv("NEBIUS_API_KEY")))
 
 # Agent setup with specified configuration
 agent = BaseAgent(
